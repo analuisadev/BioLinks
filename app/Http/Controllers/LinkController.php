@@ -38,7 +38,8 @@ class LinkController extends Controller
      */
     public function edit(Link $link)
     {
-        //
+        // $link = Link::query()->findOrFail($id);
+        return view('links.edit', compact('link'));
     }
 
     /**
@@ -46,7 +47,9 @@ class LinkController extends Controller
      */
     public function update(UpdateLinkRequest $request, Link $link)
     {
-        //
+        $link->fill($request->validated())->save();
+
+        return to_route('dashboard')->with('message', 'Link atualizado com sucesso!');
     }
 
     /**
@@ -54,6 +57,9 @@ class LinkController extends Controller
      */
     public function destroy(Link $link)
     {
-        //
+        $link->delete();
+
+        return to_route('dashboard')
+        ->with('message', 'Link deletado com sucesso!');
     }
 }
