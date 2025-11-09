@@ -1,5 +1,6 @@
 <div>
     <h1>Dashboard</h1>
+    <h2>Usuário {{  auth()->user()->name  }}</h2>
 
     @if($message = session()->get('message'))
         <div>
@@ -11,10 +12,32 @@
 
     <ul>
         @foreach ($links as $link)
-            <li>
-                <a href="{{ route('links.edit', $link) }}">{{ $link->name }}</a>
+            <li style="display:flex">
+
+                @unless($loop->last)
+
+                    <form action="{{ route('links.down', $link) }}" method="POST">
+                        @csrf
+                        @method('PATCH')
+
+                        <button>⬇️</button>
+                    </form>
+                @endunless
+
+                @unless($loop->first)
+                    <form action="{{ route('links.up', $link) }}" method="POST">
+                        @csrf
+                        @method('PATCH')
+
+                        <button>⬆️</button>
+                    </form>
+                @endunless
+
+                <a href="{{ route('links.edit', $link) }}">{{  $link->id  }}.{{ $link->name }}</a>
+
+
                 <form action="{{ route('links.destroy', $link) }}" method="POST"
-                    onsubmit="return confirm('Tem certeza em deletar este link?')">
+                      onsubmit="return confirm('Tem certeza em deletar este link?')">
                     @csrf
                     @method('DELETE')
 

@@ -25,11 +25,11 @@ class LinkController extends Controller
     public function store(StoreLinkRequest $request)
     {
 
-        /** @var User $user*/
+        /** @var User $user */
         $user = auth()->user();
 
         $user->links()->create($request->validated());
-    
+
         return to_route('dashboard');
     }
 
@@ -60,6 +60,21 @@ class LinkController extends Controller
         $link->delete();
 
         return to_route('dashboard')
-        ->with('message', 'Link deletado com sucesso!');
+            ->with('message', 'Link deletado com sucesso!');
     }
+
+    public function up(Link $link)
+    {
+        $link->moveUp();
+
+        return back();
+    }
+
+    public function down(Link $link)
+    {
+        $link->moveDown();
+
+        return back();
+    }
+
 }
