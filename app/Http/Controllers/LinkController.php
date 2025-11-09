@@ -39,6 +39,7 @@ class LinkController extends Controller
     public function edit(Link $link)
     {
         // $link = Link::query()->findOrFail($id);
+
         return view('links.edit', compact('link'));
     }
 
