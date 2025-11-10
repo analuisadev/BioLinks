@@ -5,19 +5,20 @@
         <span>{{ $message  }}</span>
     @endif
 
-    <form action="{{ route('profile') }}" method="POST">
+    <form action="{{ route('profile') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
-{{--        <div>--}}
-{{--            <input type="text" name="photo" id="photo">--}}
-{{--            @error('photo')--}}
-{{--            <span>{{ $message }}</span>--}}
-{{--            @enderror--}}
+        <div>
+            <img src="/storage/{{ $user->photo }}" alt="Foto de perfil do usuário"/>
+            <input type="file" name="photo" id="photo">
+            @error('photo')
+            <span>{{ $message }}</span>
+            @enderror
 
-{{--        </div>--}}
+        </div>
 
-{{--        <br>--}}
+        <br>
 
         <div>
             <input type="text" name="name" id="name" placeholder="Nome" value="{{  old('name', $user->name)  }}">
@@ -42,7 +43,8 @@
 
         <div>
             <span>biolinks.com.br/</span>
-            <input type="text" name="handler" id="handler" placeholder="@seulink" value="{{  old('handler', $user->handler)  }}"/>
+            <input type="text" name="handler" id="handler" placeholder="@seulink"
+                   value="{{  old('handler', $user->handler)  }}"/>
 
             @error('handler')
             <span>{{ $message }}</span>
