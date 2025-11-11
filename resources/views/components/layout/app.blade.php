@@ -8,7 +8,7 @@
     <title>{{  config('app.name')  }}</title>
     @vite('resources/css/app.css')
 </head>
-<body class="bg-slate-900 text-slate-50 h-full">
-    <h1 class="font-bold txt-3xl">Hello World!</h1>
+<body class="bg-base-900 text-slate-50 h-full">
+    {{  $slot  }}
 </body>
 </html>

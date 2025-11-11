@@ -1,60 +1,62 @@
-<div>
-    <h1>Perfil</h1>
+<x-layout.app>
+    <div>
+        <h1>Perfil</h1>
 
-    @if($message = session()->get('message'))
-        <span>{{ $message  }}</span>
-    @endif
+        @if($message = session()->get('message'))
+            <span>{{ $message  }}</span>
+        @endif
 
-    <form action="{{ route('profile') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
+        <form action="{{ route('profile') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
 
-        <div>
-            <img src="/storage/{{ $user->photo }}" alt="Foto de perfil do usuário"/>
-            <input type="file" name="photo" id="photo">
-            @error('photo')
-            <span>{{ $message }}</span>
-            @enderror
+            <div>
+                <img src="/storage/{{ $user->photo }}" alt="Foto de perfil do usuário"/>
+                <input type="file" name="photo" id="photo">
+                @error('photo')
+                <span>{{ $message }}</span>
+                @enderror
 
-        </div>
+            </div>
 
-        <br>
+            <br>
 
-        <div>
-            <input type="text" name="name" id="name" placeholder="Nome" value="{{  old('name', $user->name)  }}">
-            @error('name')
-            <span>{{ $message }}</span>
-            @enderror
+            <div>
+                <input type="text" name="name" id="name" placeholder="Nome" value="{{  old('name', $user->name)  }}">
+                @error('name')
+                <span>{{ $message }}</span>
+                @enderror
 
-        </div>
+            </div>
 
-        <br>
+            <br>
 
-        <div>
+            <div>
             <textarea type="text" name="description" id="description"
                       placeholder="Descrição">{{  old('description', $user->description)  }}</textarea>
-            @error('description')
-            <span>{{ $message }}</span>
-            @enderror
+                @error('description')
+                <span>{{ $message }}</span>
+                @enderror
 
-        </div>
+            </div>
 
-        <br>
+            <br>
 
-        <div>
-            <span>biolinks.com.br/</span>
-            <input type="text" name="handler" id="handler" placeholder="@seulink"
-                   value="{{  old('handler', $user->handler)  }}"/>
+            <div>
+                <span>biolinks.com.br/</span>
+                <input type="text" name="handler" id="handler" placeholder="@seulink"
+                       value="{{  old('handler', $user->handler)  }}"/>
 
-            @error('handler')
-            <span>{{ $message }}</span>
-            @enderror
+                @error('handler')
+                <span>{{ $message }}</span>
+                @enderror
 
-        </div>
+            </div>
 
-        <br>
+            <br>
 
-        <a href="{{  route('dashboard')  }}">Cancelar</a>
-        <button>Atualizar</button>
-    </form>
-</div>
+            <a href="{{  route('dashboard')  }}">Cancelar</a>
+            <button>Atualizar</button>
+        </form>
+    </div>
+</x-layout.app>
