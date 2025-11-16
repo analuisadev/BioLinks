@@ -1,8 +1,11 @@
-@props(['name'])
+@props(['name', 'prefix' => null])
 
-<div>
-    <input class="input" name="{{  $name  }}" {{  $attributes  }}/>
+<label class="input w-full">
+    @if($prefix)
+        <span class="text-base-content">{{ $prefix }}</span>
+    @endif
+    <input class="grow text-base-content" name="{{  $name  }}" {{  $attributes  }}/>
     @error($name)
         <div class="text-sm text-error">{{  $message  }}</div>
     @enderror
-</div>
+</label>

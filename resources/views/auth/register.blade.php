@@ -1,61 +1,19 @@
 <x-layout.app>
-    <div>
-        {{ auth()->id() }}
+    <x-container>
+        <x-card title="Register">
+            <x-form :route="route('register')" post id="register-form">
+                <x-input type="text" name="name" id="name" placeholder="Name" value="{{  old('name')  }}"/>
+                <x-input type="text" name="email" id="email" placeholder="E-mail" value="{{  old('email')  }}"/>
+                <x-input type="text" name="email_confirmation" id="email_confirmation" placeholder="E-mail Confirmation"/>
+                <x-input type="password" name="password" id="password" placeholder="Password"/>
+            </x-form>
 
-        <h1>Registro</h1>
+            <x-slot:actions>
+                <x-a :href="route('login')">Already have an account!</x-a>
+                <x-button form="register-form">Register</x-button>
+            </x-slot:actions>
 
-        @if($message = session()->get('message'))
-            <div>
-                <span>{{ $message }}</span>
-            </div>
-        @endif
-
-        <form action="{{ route('register') }}" method="POST">
-            @csrf
-
-            <div>
-                <input type="text" name="name" id="name" placeholder="Digite o seu nome" value="{{  old('name')  }}">
-
-                @error('name')
-                <span>{{ $message }}</span>
-                @enderror
-
-            </div>
-
-            <br>
-
-            <div>
-                <input type="email" name="email" id="email" placeholder="Informe o seu e-mail"
-                       value="{{  old('email')  }}">
-
-                @error('email')
-                <span>{{ $message }}</span>
-                @enderror
-
-            </div>
-
-            <br>
-
-            <div>
-                <input type="email" name="email_confirmation" id="email_confirmation"
-                       placeholder="Confirme o seu e-mail">
-            </div>
-
-            <br>
-
-            <div>
-                <input type="password" name="password" id="password" placeholder="Digite a sua senha">
-
-                @error('password')
-                <span>{{ $message }}</span>
-                @enderror
-
-            </div>
-
-            <br>
-
-            <button>Registrar</button>
-        </form>
-    </div>
+        </x-card>
+    </x-container>
 
 </x-layout.app>
