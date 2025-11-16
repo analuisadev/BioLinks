@@ -1,52 +1,53 @@
 <x-layout.app>
-    <div>
-        <h1>Dashboard</h1>
-        <h2>Usuário {{  auth()->user()->name  }}</h2>
-        <a href="{{ route('profile') }}">Atualizar Perfil</a>
+    <x-container>
+        <div class="text-center space-y-4">
+            <x-img src="storage/{{ $user->photo }}" alt="Profile Picture" />
 
-        @if($message = session()->get('message'))
-            <div>
-                <span>{{ $message }}</span>
-            </div>
-        @endif
+            <div class="font-bold text-2xl tracking-wide">{{ $user->name }}</div>
 
-        <a href="{{ route('links.create') }}">Criar Link</a>
+            <div class="font-sm opacity-80">{{ $user->description }}</div>
 
-        <ul>
-            @foreach ($links as $link)
-                <li style="display:flex">
+            <ul class="space-y-2">
+                @foreach ($links as $link)
+                    <li class="flex items-center gap-2">
+                        @unless ($loop->last)
+                            <x-form :route="route('links.down', $link)" patch>
+                                <x-button color="ghost">
+                                    <x-icons.arrow-down class="w-6 h-6" />
+                                </x-button>
+                            </x-form>
+                        @else
+                            <x-button disabled color="ghost">
+                                <x-icons.arrow-down class="w-6 h-6" />
+                            </x-button>
+                        @endunless
 
-                    @unless($loop->last)
+                        @unless ($loop->first)
+                            <x-form :route="route('links.up', $link)" patch>
+                                <x-button color="ghost">
+                                    <x-icons.arrow-up class="w-6 h-6" />
+                                </x-button>
+                            </x-form>
+                        @else
+                            <x-button disabled color="ghost">
+                                <x-icons.arrow-up class="w-6 h-6" />
+                            </x-button>
+                        @endunless
 
-                        <form action="{{ route('links.down', $link) }}" method="POST">
-                            @csrf
-                            @method('PATCH')
+                        <x-button href="{{ route('links.edit', $link) }}" block outline color="info">
+                            {{ $link->name }}
+                        </x-button>
 
-                            <button>⬇️</button>
-                        </form>
-                    @endunless
+                        <x-form :route="route('links.destroy', $link)" delete onsubmit="return confirm('Tem certeza?')">
 
-                    @unless($loop->first)
-                        <form action="{{ route('links.up', $link) }}" method="POST">
-                            @csrf
-                            @method('PATCH')
+                            <x-button color="ghost">
+                                <x-icons.trash class="w-6 h-6" />
+                            </x-button>
+                        </x-form>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </x-container>
 
-                            <button>⬆️</button>
-                        </form>
-                    @endunless
-
-                    <a href="{{ route('links.edit', $link) }}">{{  $link->id  }}.{{ $link->name }}</a>
-
-
-                    <form action="{{ route('links.destroy', $link) }}" method="POST"
-                          onsubmit="return confirm('Tem certeza em deletar este link?')">
-                        @csrf
-                        @method('DELETE')
-
-                        <button>deletar</button>
-                    </form>
-                </li>
-            @endforeach
-        </ul>
-    </div>
 </x-layout.app>
